@@ -18,9 +18,27 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $valueCounts = $em->getRepository(Choice::class)->findValueCounts();
+
+        return array(
+            'valueCounts' => $valueCounts,
+        );
+    }
+
+    /**
+     * @Route("/pick-a-number-modal", name="pick_a_number_modal")
+     * @Template("default/modal.html.twig")
+     */
+    public function modalAction(Request $request)
+    {
         $choice = new Choice();
-        $form = $this->createForm(NumberChoiceType::class, $choice)
-                     ->add('submit', SubmitType::class, array('label' => 'Submit'));
+
+        $form = $this->createForm(NumberChoiceType::class, $choice, array(
+                'action' => $this->generateUrl('pick_a_number_modal'),
+            ))
+            ->add('submit', SubmitType::class, array('label' => 'Submit'));
 
         $form->handleRequest($request);
 
@@ -32,7 +50,6 @@ class DefaultController extends Controller
             return $this->redirectToRoute('homepage');
         }
 
-        // replace this example code with whatever you need
         return array(
             'form' => $form->createView(),
         );

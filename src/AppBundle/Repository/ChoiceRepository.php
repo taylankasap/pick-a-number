@@ -10,4 +10,34 @@ namespace AppBundle\Repository;
  */
 class ChoiceRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * TODO: Move sum & sort logic to the SQL
+     */
+    public function findValueCounts()
+    {
+        $allChoices = $this->findAll();
+
+        $valueCounts = array();
+
+        foreach ($allChoices as $choice) {
+            $value = $choice->getValue();
+
+            if (!isset($valueCounts[$value])) {
+                $valueCounts[$value] = 0;
+            }
+
+            $valueCounts[$value]++;
+        }
+
+        // Sort by value count descending
+        uasort($valueCounts, function($count1, $count2) {
+            if ($count1 === $count2) {
+                return 0;
+            }
+
+            return $count1 < $count2 ? 1 : -1;
+        });
+
+        return $valueCounts;
+    }
 }
