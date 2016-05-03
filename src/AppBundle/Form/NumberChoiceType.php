@@ -16,7 +16,7 @@ class NumberChoiceType extends AbstractType
     {
         $builder
             ->add('value', null, array(
-                'label' => 'Pick a number',
+                'label' => 'Pick a number between 1 and 99',
                 'attr' => array(
                     'autofocus' => 'autofocus',
                 ),

@@ -37,15 +37,20 @@ class DefaultController extends Controller
 
         $form = $this->createForm(NumberChoiceType::class, $choice, array(
                 'action' => $this->generateUrl('pick_a_number_modal'),
-            ))
-            ->add('submit', SubmitType::class, array('label' => 'Submit'));
+            ));
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($choice);
-            $em->flush();
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($choice);
+                $em->flush();
+            } else {
+                foreach ($form->getErrors(true) as $error) {
+                    $this->addFlash('error', $error->getMessage());
+                }
+            }
 
             return $this->redirectToRoute('homepage');
         }

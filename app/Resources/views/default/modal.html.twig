@@ -1,14 +1,16 @@
 <div class="reveal" id="pick-a-number-modal" data-reveal>
     <h1>Go ahead, pick a number!</h1>
 
-    <!-- <form action="{{ path('homepage') }}" method="post">
-        <label><input type="number" placeholder="Between 1-99"></label>
-    </form> -->
+    {% for flash_message in app.session.flashBag.get('error') %}
+        <div class="alert callout">
+            <p>{{ flash_message }}</p>
+        </div>
+    {% endfor %}
 
     {{ form_start(form) }}
         {{ form_label(form.value) }}
         {{ form_errors(form.value) }}
         {{ form_widget(form.value) }}
-        <button type="submit">Submit</button>
+        <button type="submit" class="button success">Submit</button>
     {{ form_end(form) }}
 </div>
