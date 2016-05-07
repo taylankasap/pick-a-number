@@ -25,6 +25,7 @@ class Choice
      * @var string
      *
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(groups={"NumberChoice"})
      * @Assert\Type(
      *     groups={"NumberChoice"},
      *     type="integer",
