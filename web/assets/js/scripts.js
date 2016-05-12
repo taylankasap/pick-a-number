@@ -14,4 +14,39 @@
             $modal.open();
         }
     })();
+
+    // Graph
+    (function() {
+        $.ajax({
+            type: 'GET',
+            url: '/value-counts',
+            success: function(data) {
+                console.log(data);
+                d3.select('.canvas').selectAll('p')
+                    .data(data)
+                    .enter()
+                    .append('span')
+                    .style('display', 'block')
+                    .style('font-family', 'Courier')
+                    .html(function(item) {
+                        var value = item.value.toString();
+                        var count = item.count.toString();
+
+                        if (item.value <= 9) {
+                            value += '&nbsp;';
+                        }
+
+                        if (item.count <= 9) {
+                            count += '&nbsp;';
+                        }
+
+                        var text = 'Picked ' + value + ' ' + count + ' time' + (item.value > 1 ? 's' : '&nbsp;');
+
+                        text += '&nbsp;' + '-'.repeat(item.count);
+
+                        return text;
+                    });
+            }
+        });
+    })();
 })();
