@@ -48,7 +48,6 @@
             type: 'GET',
             url: '/value-counts',
             success: function(data) {
-                console.log(data);
                 d3.select('.canvas').selectAll('p')
                     .data(data)
                     .enter()
@@ -67,7 +66,7 @@
                             count += '&nbsp;';
                         }
 
-                        var text = 'Picked ' + value + ' ' + count + ' time' + (item.value > 1 ? 's' : '&nbsp;');
+                        var text = 'Picked ' + value + ' ' + count + ' time' + (item.count > 1 ? 's' : '&nbsp;');
 
                         text += '&nbsp;' + '-'.repeat(item.count);
 
