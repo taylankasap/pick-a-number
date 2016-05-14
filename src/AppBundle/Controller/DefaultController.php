@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
@@ -58,5 +59,23 @@ class DefaultController extends Controller
         return array(
             'form' => $form->createView(),
         );
+    }
+    /**
+     * @Route("/value-counts", name="value_counts")
+     */
+    public function valueCountsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $valueCounts = $em->getRepository(Choice::class)->findValueCounts();
+
+        $data = array_map(function($value, $count) {
+            return array(
+                'value' => $value,
+                'count' => $count,
+            );
+        }, array_keys($valueCounts), $valueCounts);
+
+        return new JsonResponse($data);
     }
 }
