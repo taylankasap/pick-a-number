@@ -47,13 +47,22 @@ class DefaultController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($choice);
                 $em->flush();
-            } else {
-                foreach ($form->getErrors(true) as $error) {
-                    $this->addFlash('error', $error->getMessage());
-                }
-            }
 
-            return $this->redirectToRoute('homepage');
+                return new JsonResponse(array(
+                    'success' => true,
+                ));
+            } else {
+                $errors = array();
+
+                foreach ($form->getErrors(true) as $error) {
+                    $errors[] = $error->getMessage();
+                }
+
+                return new JsonResponse(array(
+                    'success' => false,
+                    'errors' => $errors,
+                ));
+            }
         }
 
         return array(
