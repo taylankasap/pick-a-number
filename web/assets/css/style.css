@@ -1,4 +1,18 @@
-/*.reveal-overlay {
-    background-color: #fff;
+* {
+    box-sizing: border-box;
 }
-*/
+
+hmtl,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.canvas div {
+    float: left;
+    font: 10px sans-serif;
+    background-color: steelblue;
+    text-align: left;
+    color: white;
+    text-align: center;
+}
