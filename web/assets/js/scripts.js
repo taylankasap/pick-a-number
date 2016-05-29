@@ -85,34 +85,34 @@
                 url: '/value-counts',
                 success: function(data) {
                     data.sort(function(item1, item2) {
-                        if (item1.count === item2.count) {
+                        if (item1.value === item2.value) {
                             return 0;
                         }
 
-                        return item1.count < item2.count ? 1 : -1;
+                        return item1.value < item2.value ? -1 : 1;
                     });
 
+                    var counts = data.map(function(item) {
+                        return item.count;
+                    });
+
+                    console.log(counts);
+                    console.log(Math.max.apply(Math, counts));
+
                     var x = d3.scale.linear()
-                        .domain([0, data[0].count])
-                        .range([0, $(window).height()]);
+                        .domain([0, Math.max.apply(Math, counts)])
+                        .range([80, 30]);
 
                     d3.select('.canvas').selectAll('p')
                         .data(data)
                         .enter()
                         .append('div')
                         .html(function(item) {
-                            return item.value;
-                        })
-                        .style('width', function(item) {
-                            return $(window).width() / data.length + 'px';
+                            return item.value + '<br>' + item.count;
                         })
                         .style('background-color', function(item) {
-                            return next(colors);
-                        })
-                        .transition()
-                        .duration(2000)
-                        .style('height', function(item) {
-                            return x(item.count) + 'px';
+                            console.log('hsl(' + 48 + ',' + 89 + '%,' + x(item.count) + '%)');
+                            return 'hsl(' + 48 + ',' + 89 + '%,' + x(item.count) + '%)';
                         });
                 }
             });
@@ -123,35 +123,5 @@
         };
     })();
 
-    var colors = [
-        '#1dd2af',
-        '#3498db',
-        '#c0392b',
-        '#9b59b6',
-        '#34495e',
-        '#2ecc71',
-        '#2980b9',
-        '#16a085',
-        '#7f8c8d',
-        '#8e44ad',
-        '#2c3e50',
-        '#f1c40f',
-        '#e67e22',
-        '#e74c3c',
-        '#27ae60',
-        '#95a5a6',
-        '#f39c12',
-        '#d35400',
-        '#bdc3c7'
-    ];
-
-    function next(arr) {
-        if (typeof this.cursor !== 'number' || this.cursor >= arr.length) {
-            this.cursor = 0;
-        } else {
-            this.cursor++;
-        }
-
-        return arr[this.cursor];
-    }
+    var baseColorHsl = [48, 89, 50];
 })();
