@@ -49,9 +49,9 @@
                     return false;
                 }
 
-                $form.attr('data-submitted', true);
-
                 if (form.checkValidity()) {
+                    $form.attr('data-submitted', true);
+
                     $.ajax({
                         'method': $form.attr('method'),
                         'url': $form.attr('action'),
@@ -96,14 +96,12 @@
                         return item.count;
                     });
 
-                    console.log(counts);
-                    console.log(Math.max.apply(Math, counts));
-
-                    var x = d3.scale.linear()
+                    var calcLuminance = d3.scale.linear()
                         .domain([0, Math.max.apply(Math, counts)])
                         .range([80, 30]);
 
-                    d3.select('.canvas').selectAll('p')
+                    var canvas = d3.select('.canvas');
+                    canvas.selectAll()
                         .data(data)
                         .enter()
                         .append('div')
@@ -111,8 +109,16 @@
                             return item.value + '<br>' + item.count;
                         })
                         .style('background-color', function(item) {
-                            console.log('hsl(' + 48 + ',' + 89 + '%,' + x(item.count) + '%)');
-                            return 'hsl(' + 48 + ',' + 89 + '%,' + x(item.count) + '%)';
+                            return 'hsl(' + 48 + ',' + 89 + '%,' + calcLuminance(item.count) + '%)';
+                        })
+                        .transition()
+                        .delay(function(d, i) {
+                            return i * 20;
+                        })
+                        .duration(1000)
+                        .style('transform', function(item) {
+                            // return item.attr('data-animation');
+                            return canvas.attr('data-animation');
                         });
                 }
             });

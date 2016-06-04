@@ -12,16 +12,18 @@ body {
     display: flex;
     justify-content: space-between;
     align-content: stretch;
-    flex-wrap: wrap;
+    width: 100vw;
+    height: 100vh;
 }
 
 .canvas div {
+    flex-grow: 1;
+    padding: 1vw;
+    padding: 1vmax;
+    transform: scale(0);
     font-family: Arial;
     font-size: 15px;
     font-weight: bold;
     color: #020755;
     text-align: center;
-    background-color: hsl(48, 89%, 50%);
-    width: 80px;
-    height: 80px;
 }

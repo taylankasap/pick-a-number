@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="canvas"></div>
+    <div class="canvas" data-animation="{{ random(['scale(1)', 'scaleX(1)', 'scaleY(1)']) }}" data-animation-duration="{{ 250 + random(750) }}" data-animation-delay="{{ 20 + random(180) }}"></div>
+
+    <style>
+        .canvas {
+            flex-direction: {{ random(['row', 'row-reverse', 'column', 'column-reverse']) }};
+            flex-wrap: {{ random(['wrap', 'wrap-reverse']) }};
+        }
+    </style>
 {% endblock %}

@@ -1,4 +1,4 @@
-<div class="reveal" id="pick-a-number-modal" data-reveal data-animation-out="slide-out-right">
+<div class="reveal" id="pick-a-number-modal" data-reveal data-animation-out="{{ random(['slide-out-up', 'slide-out-right', 'slide-out-down', 'slide-out-left']) }}">
     <h1>Go ahead, pick a number!</h1>
 
     {% for flash_message in app.session.flashBag.get('error') %}
