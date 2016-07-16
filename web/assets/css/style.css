@@ -21,9 +21,36 @@ body {
     padding: 1vw;
     padding: 1vmax;
     transform: scale(0);
-    font-family: Arial;
-    font-size: 15px;
+    font-family: 'Signika', sans-serif;
+    font-size: 20px;
     font-weight: bold;
-    color: #020755;
+    color: #A20995;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.canvas div:before {
+    content: attr(data-count);
+    font-size: 70px;
+    color: rgba(0,0,0,0.2);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    z-index: -10;
+    overflow: hidden;
+    transform: scale(0);
+    transition: transform 200ms;
+}
+
+.canvas div:hover:before {
+    transform: scale(1);
 }

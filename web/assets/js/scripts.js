@@ -104,8 +104,14 @@
                     canvas.selectAll()
                         .data(data)
                         .enter()
-                        .append('div')
+                        .append(function(item) {
+                            var elem = document.createElement('div');
+                            elem.setAttribute('data-count', item.count);
+                            elem.appendChild(document.createElement('span'));
+                            return elem;
+                        })
                         .html(function(item) {
+                            return item.value;
                             return item.value + '<br>' + item.count;
                         })
                         .style('background-color', function(item) {
